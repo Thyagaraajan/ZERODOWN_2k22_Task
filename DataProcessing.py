@@ -7,8 +7,8 @@ from matplotlib import pyplot as plt
 import csv
 #%matplotlib inline 
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["local"]
+myclient = pymongo.MongoClient("mongodb+srv://Thyagaraajan:rajurath@cluster0.o15jq.mongodb.net/Zerodown?retryWrites=true&w=majority")
+mydb = myclient["ZeroDown"]
 def dictFunction(val):
     mycol = mydb[val]
 
@@ -47,10 +47,10 @@ for i in new_Dict.values():
     doc = {"_id":i[2], "City":i[0], "State":i[1], "Zip":i[2], "Places_Of_Worship":i[5], "Convention_Centers_Fairgrounds":i[6], "Cruise_Line_Terminals":i[7],"Major_Sport_Venues":i[8],"Mobile_Home_Parks":i[9], "location":{"type":"Point","coordinates":[float(i[3]),float(i[4])]}}
     l.append(doc)
 
-collection = mydb["Final"]
+collection = mydb["finals"]
 collection.drop()
 collection.insert_many(l)
-collection.create_index([("location",pymongo.GEOSPHERE)])
+#collection.create_index([("location",pymongo.GEOSPHERE)])
 filename = "D:\\Datasets\\final_db.csv"
 fields = ["City", "State", "Zip", "X", "Y", "Places_Of_Worship", "Convention_Centers_Fairgrounds","Cruise_Line_Terminals","Major_Sport_Venues","Mobile_Home_Parks"]
 # writing to csv file 
@@ -65,8 +65,10 @@ with open(filename, 'w') as csvfile:
         
     # writing the data rows 
     csvwriter.writerows(new_Dict.values())
-    
-#This function will return the top (Limit:x) x neighbours nearer to the given (x,y) latitude as input.
+
+
+
+#This function will return the top (Limit:x) x neighbours nearer to the given (x,y) latitude and longitude as input.
    
 def returnpoints(x,y):
     docs=[]
