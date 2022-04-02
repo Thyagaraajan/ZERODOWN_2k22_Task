@@ -66,7 +66,14 @@ with open(filename, 'w') as csvfile:
     # writing the data rows 
     csvwriter.writerows(new_Dict.values())
     
-
+#This function will return the top (Limit:x) x neighbours nearer to the given (x,y) latitude as input.
+   
+def returnpoints(x,y):
+    docs=[]
+    for doc in mydb['Final'].find({"location":{"$near":[x,y]}}).limit(10):
+        docs.append(doc)
+    return docs        
+     
 # key_list = np.array([i for i in new_Dict.keys()])
 # worship_list = np.array([i[3] for i in new_Dict.values()])
 # center_list = np.array([i[4] for i in new_Dict.values()])
@@ -105,12 +112,3 @@ with open(filename, 'w') as csvfile:
 # plt.xlabel("ZIP Code")
 
 # plt.show()
-
-#This function will return the top (Limit:x) x neighbours nearer to the given (x,y) latitude as input.
-  
-def returnpoints(x,y):
-    docs=[]
-    for doc in mydb['Final'].find({"location":{"$near":[x,y]}}).limit(10):
-        docs.append(doc)
-    return docs        
-    
