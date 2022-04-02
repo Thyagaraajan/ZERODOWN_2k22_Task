@@ -1,5 +1,6 @@
 import csv
 from dataclasses import field
+from tokenize import Double
 import pymongo
 import numpy as np
 from matplotlib import pyplot as plt
@@ -41,6 +42,15 @@ for i in range(len(L)):
 
 #print(new_Dict)
 
+l = []
+for i in new_Dict.values():
+    doc = {"_id":i[2], "City":i[0], "State":i[1], "Zip":i[2], "Places_Of_Worship":i[5], "Convention_Centers_Fairgrounds":i[6], "Cruise_Line_Terminals":i[7],"Major_Sport_Venues":i[8],"Mobile_Home_Parks":i[9], "location":{"type":"Point","coordinates":[float(i[3]),float(i[4])]}}
+    l.append(doc)
+
+collection = mydb["Final"]
+collection.drop()
+collection.insert_many(l)
+collection.create_index([("location",pymongo.GEOSPHERE)])
 filename = "D:\\Datasets\\final_db.csv"
 fields = ["City", "State", "Zip", "X", "Y", "Places_Of_Worship", "Convention_Centers_Fairgrounds","Cruise_Line_Terminals","Major_Sport_Venues","Mobile_Home_Parks"]
 # writing to csv file 
@@ -56,6 +66,12 @@ with open(filename, 'w') as csvfile:
     # writing the data rows 
     csvwriter.writerows(new_Dict.values())
     
+
+
+
+
+
+
 
 # key_list = np.array([i for i in new_Dict.keys()])
 # worship_list = np.array([i[3] for i in new_Dict.values()])
@@ -95,3 +111,12 @@ with open(filename, 'w') as csvfile:
 # plt.xlabel("ZIP Code")
 
 # plt.show()
+#This function will return the top (Limit:x) x neighbours nearer to the given (x,y) latitude as input.
+  
+def returnpoints(x,y):
+    docs=[]
+    for doc in mydb['Final'].find({"location":{"$near":[x,y]}}).limit(10):
+        docs.append(doc)
+    return docs        
+    
+#print(returnpoints(-70.30109,43.744))
