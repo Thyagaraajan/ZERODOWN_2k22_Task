@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+  background-color: black;
+  text-align: center;
+}
+
+.title{
+  color:white;
+  font-size: 200%;
+  font-size: 'Roboto',sans-serif;
+}

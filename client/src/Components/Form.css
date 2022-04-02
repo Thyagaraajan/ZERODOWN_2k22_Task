@@ -1,0 +1,32 @@
+.city input{
+    margin-top: 20px;
+    background-color: white;
+    color: black;
+    width: 30%;
+    height: 20px;
+    border-radius: 10px;
+}
+
+.button button{
+    margin-top: 10px;
+    color: #006778;
+    background-color: #0093AB;
+    width: 100px;
+    height: 30px;
+    border-radius: 20px;
+    font-size: 90%;
+    border: 1px solid black;
+}
+
+
+.button button:hover{
+    background-color: #FFD124;
+}
+
+
+.score{
+    margin-top: 10px;
+    color: white;
+    font-size: 200%;
+    
+}
